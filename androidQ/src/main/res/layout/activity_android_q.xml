@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btnGetData"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="访问网络数据"/>
+
+    <Button
+        android:id="@+id/btnGetImg"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="获取图片"/>
+
+    <Button
+        android:id="@+id/btnGetVideo"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="获取视频"/>
+
+    <Button
+        android:id="@+id/btnFileExists"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="创建文件夹"/>
+
+    <Button
+        android:id="@+id/btnCreateFile"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="创建txt文件"/>
+
+    <Button
+        android:id="@+id/btnWriteContent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="写入数据"/>
+
+    <Button
+        android:id="@+id/btnSaveStorageFile"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="保存文件到公共目录"/>
+
+    <Button
+        android:id="@+id/btnInStallAPK"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="安装APK"/>
+
+    <Button
+        android:id="@+id/btnGetPermission"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="获取外部存储权限适配"/>
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <VideoView
+        android:id="@+id/videoview"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
+
+
+</LinearLayout>

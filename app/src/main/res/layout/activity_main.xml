@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/tvTips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:textSize="18sp"
+        android:padding="20dp"
+        android:text="在操作之前请先选择对应版本，给予对应权限"/>
+    <Button
+        android:id="@+id/btnAndroid10"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Android10"
+        app:layout_constraintTop_toBottomOf="@id/tvTips" />
+
+    <Button
+        android:id="@+id/btnAndroid11"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Android11"
+        app:layout_constraintTop_toBottomOf="@id/btnAndroid10"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

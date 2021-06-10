@@ -1,0 +1,5 @@
+rootProject.name = "AdnroidAdaptation"
+include ':app'
+include ':network'
+include ':androidQ'
+include ':androidR'

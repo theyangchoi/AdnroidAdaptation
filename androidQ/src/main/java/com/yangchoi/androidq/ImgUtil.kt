@@ -33,7 +33,8 @@ object ImgUtil {
      * 获取本地图片
      * */
     fun getImage(context: Context):String?{
-        val imageCursor: Cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION, null, null, IMAGE_PROJECTION[4] + " DESC")!!
+        val imageCursor: Cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_PROJECTION,
+            null, null, IMAGE_PROJECTION[4] + " DESC")!!
         if (imageCursor.moveToNext()){
             var path = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[0]))
             val name = imageCursor.getString(imageCursor.getColumnIndexOrThrow(IMAGE_PROJECTION[1]))

@@ -2,6 +2,7 @@ package com.yangchoi.androidr
 
 import android.Manifest
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -73,26 +74,65 @@ class PermissionActivity : AppCompatActivity() {
         }
     }
 
-
+    /**
+     * Android 11 在申请定位权限的时候要对前后台定位权限进行分开申请,并且添加说明
+     * */
     @RequiresApi(Build.VERSION_CODES.M)
     private fun Context.checkBackgroundLocationPermissionAPI30(backgroundLocationRequestCode: Int) {
-        if (checkSinglePermission(Manifest.permission.ACCESS_BACKGROUND_LOCATION)) return
-        AlertDialog.Builder(this)
-            .setTitle("标题")
-            .setMessage("提示内容")
-            .setPositiveButton("确定") { _,_ ->
-                // this request will take user to Application's Setting page
-                requestPermissions(arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), backgroundLocationRequestCode)
+        val permissionAccessCoarseLocationApproved = ActivityCompat
+            .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED
+
+        if (permissionAccessCoarseLocationApproved) {
+            val backgroundLocationPermissionApproved = ActivityCompat
+                .checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
+                    PackageManager.PERMISSION_GRANTED
+
+            if (backgroundLocationPermissionApproved) {
+                //前后台位置权限都有
+            } else {
+                //申请后台权限
+                if (applicationInfo.targetSdkVersion < Build.VERSION_CODES.R){
+                    ActivityCompat.requestPermissions(this@PermissionActivity,
+                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                        200)
+                }else{
+                    AlertDialog.Builder(this).setMessage("需要提供后台位置权限，请在设置页面选择始终允许")
+                        .setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
+                            ActivityCompat.requestPermissions(this@PermissionActivity,
+                                arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                                200)
+                        }).create().show()
+                }
+
             }
-            .setNegativeButton("取消") { dialog,_ ->
-                dialog.dismiss()
+        } else {
+            if (applicationInfo.targetSdkVersion < Build.VERSION_CODES.R){
+                //申请前台和后台位置权限
+                ActivityCompat.requestPermissions(this@PermissionActivity,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                    100)
+            }else{
+                //申请前台位置权限
+                ActivityCompat.requestPermissions(this@PermissionActivity,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    100)
             }
-            .create()
-            .show()
+        }
 
     }
 
     private fun Context.checkSinglePermission(permission: String) : Boolean {
         return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    /**
+     * 动态获取电话号码权限
+     * 如果不获取权限会发生以下异常
+     * java.lang.SecurityException: getLine1NumberForDisplay: Neither user 10151 nor current process has android.permission.READ_PHONE_STATE, android.permission.READ_SMS, or android.permission.READ_PHONE_NUMBERS
+     * */
+    private fun registerPhoneNumbersPermission(){
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.READ_PHONE_STATE,Manifest.permission.READ_PHONE_NUMBERS), 100)
     }
 }
